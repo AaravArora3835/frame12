@@ -4,9 +4,7 @@ A real-time Wi-Fi deauthentication attack detector. Runs on a laptop with a wire
 
 ## Why
 
-Deauth attacks kick devices off Wi-Fi silently. No password needed, no warning, nothing that looks different from a normal dropped connection. Most people who get hit by one just assume their router glitched, because there's no way to tell the difference. That's the actual problem. The attack is invisible by design.
-
-This tool makes it visible.
+Deauth attacks kick devices off Wi-Fi silently. No password needed, no warning, nothing that looks different from a normal dropped connection. Most people who get hit by one just assume their router glitched, because there's no way to tell the difference. The attack is invisible by design, and this tool makes it visible.
 
 ## How it works
 
@@ -14,7 +12,7 @@ This tool makes it visible.
 - Tracks deauth frame count per source MAC over a rolling 10 second window
 - Alerts when a source sends more than 10 deauth frames in that window. I picked 10 because my baseline testing on normal network traffic never produced more than 0 deauth frames in any 10 second window, so anything above that is already well outside normal
 - Logs every event to CSV
-- Shows all of it through a live terminal dashboard built with `rich`, a status panel that flips green to red, a live table of current rates per device, and a rolling alert log
+- Shows all of it through a live terminal dashboard built with `rich`: a status panel that flips green to red, a live table of current rates per device, and a rolling alert log
 
 ## Results
 
@@ -28,7 +26,7 @@ Tested on my own devices, on my own network, three runs:
 
 Raw logs are in the repo if you want to check the numbers yourself.
 
-The more interesting result: some of my test devices resisted the attack entirely, which is Protected Management Frames (part of WPA3) doing its job. But it wasn't consistent. The exact same phone was vulnerable on one connection and protected on the next connection to the same network. My best explanation is that my router has PMF set to optional instead of required, so it gets renegotiated every time a device connects instead of being guaranteed session to session. I haven't confirmed this by checking the RSN capability bits in Wireshark yet, so take it as a hypothesis, not a proven result. It's the next thing I want to verify.
+The weirder result: some of my test devices resisted the attack entirely, which is Protected Management Frames (part of WPA3) doing its job. But it wasn't consistent. The exact same phone was vulnerable on one connection and protected on the next connection to the same network. My best guess is that my router has PMF set to optional instead of required, so it gets renegotiated every time a device connects instead of being guaranteed session to session. I haven't confirmed this by checking the RSN capability bits in Wireshark yet, so take it as a hypothesis, not a proven result. It's the next thing I want to check.
 
 ## Ethics
 
